@@ -1,0 +1,101 @@
+classDiagram
+direction TB
+    class Asexual {
+	    +reproduce(entity_ptr: *Entity)
+    }
+
+    class Homo {
+	    +reproduce(entity_ptr: *Entity)
+    }
+
+    class Hetero {
+	    +reproduce(entity_ptr: *Entity)
+    }
+
+    class ReproductionStrategy {
+	    +reproduce(entity_ptr: *Entity)
+    }
+
+    class EntityFactory {
+	    create(type: string) *Entity
+	    register(type: string, species: *Species) void
+    }
+
+    class Logger {
+	    +process_data() dict
+	    +write_csv() void
+    }
+
+    class ConfigParser {
+	    +parse(path: string) toml::table
+    }
+
+    class Simulation {
+	    +config: toml::table
+	    +run() void
+    }
+
+    class World {
+	    +flocks: std::vector
+	    +entities: std::vector
+	    -_config: toml::table
+    }
+
+    class Species {
+	    id: uuid
+	    name: string
+	    diet: std::vector
+	    lifespan: int
+	    max_energy: float
+	    sense_radius: float
+	    act_radius: float
+	    speed: int
+	    reproduction_strategies: std::vector
+    }
+
+    class Entity {
+	    uuid: uuid
+	    sex: enum
+	    species: *Species
+	    age: int
+	    energy: float
+	    children: std::vector
+	    is_alive: bool
+	    status: *Strategy
+	    flock: *Flock
+	    +update()
+	    -move()
+	    send_energy()
+	    -eat()
+	    -reproduce()
+	    -attack()
+	    -sence()
+	    +die()
+    }
+
+    class FlockManager {
+    }
+
+    class Flock {
+	    uuid: uuid
+	    organisms: std:vector
+	    energy: float
+	    +add()
+	    +remove()
+    }
+
+	<<abstract>> ReproductionStrategy
+	<<interface>> Entity
+
+    Simulation -- World
+    World -- Entity
+    Asexual --|> ReproductionStrategy
+    Hetero --|> ReproductionStrategy
+    Homo --|> ReproductionStrategy
+    Species -- Entity
+    Flock -- Entity
+    EntityFactory -- Entity
+    ReproductionStrategy -- Species
+    Logger -- World
+    ConfigParser -- Simulation
+
