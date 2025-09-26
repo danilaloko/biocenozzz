@@ -35,12 +35,6 @@ direction TB
 	    +run() void
     }
 
-    class World {
-	    +flocks: std::vector
-	    +entities: std::vector
-	    -_config: toml::table
-    }
-
     class Species {
 	    id: uuid
 	    name: string
@@ -53,6 +47,15 @@ direction TB
 	    reproduction_strategies: std::vector
     }
 
+    class Flock {
+	    uuid: uuid
+	    organisms: std:vector
+	    pos: std::pair
+	    energy: float
+	    +add()
+	    +remove()
+    }
+
     class Entity {
 	    uuid: uuid
 	    sex: enum
@@ -62,6 +65,7 @@ direction TB
 	    children: std::vector
 	    is_alive: bool
 	    status: *Strategy
+	    pos: std::pair
 	    flock: *Flock
 	    +update()
 	    -move()
@@ -73,15 +77,14 @@ direction TB
 	    +die()
     }
 
-    class FlockManager {
+    class World {
+	    -_config: toml::table
     }
 
-    class Flock {
-	    uuid: uuid
-	    organisms: std:vector
-	    energy: float
-	    +add()
-	    +remove()
+    class FlockManager {
+	    +flocks: std::vector
+	    +strategies: std::vector
+	    +update() void
     }
 
 	<<abstract>> ReproductionStrategy
