@@ -47,15 +47,6 @@ direction TB
 	    reproduction_strategies: std::vector
     }
 
-    class Flock {
-	    uuid: uuid
-	    organisms: std:vector
-	    pos: std::pair
-	    energy: float
-	    +add()
-	    +remove()
-    }
-
     class Entity {
 	    uuid: uuid
 	    sex: enum
@@ -87,6 +78,20 @@ direction TB
 	    +update() void
     }
 
+    class Flock {
+	    uuid: uuid
+	    organisms: std:vector
+	    leader: *Entity
+	    mode: *FlockStrategy
+	    energy: float
+	    +add()
+	    +remove()
+	    update()
+	    gain()
+	    defence()
+	    share()
+    }
+
 	<<abstract>> ReproductionStrategy
 	<<interface>> Entity
 
@@ -101,4 +106,5 @@ direction TB
     ReproductionStrategy -- Species
     Logger -- World
     ConfigParser -- Simulation
+    FlockManager -- World
 
