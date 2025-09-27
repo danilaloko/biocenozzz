@@ -1,5 +1,5 @@
 classDiagram
-direction TB
+direction LR
     class Asexual {
 	    +reproduce(entity_ptr: *Entity)
     }
@@ -47,27 +47,6 @@ direction TB
 	    reproduction_strategies: std::vector
     }
 
-    class Entity {
-	    uuid: uuid
-	    sex: enum
-	    species: *Species
-	    age: int
-	    energy: float
-	    children: std::vector
-	    is_alive: bool
-	    status: *Strategy
-	    pos: std::pair
-	    flock: *Flock
-	    +update()
-	    -move()
-	    send_energy()
-	    -eat()
-	    -reproduce()
-	    -attack()
-	    -sence()
-	    +die()
-    }
-
     class World {
 	    -_config: toml::table
     }
@@ -92,19 +71,41 @@ direction TB
 	    share()
     }
 
+    class Entity {
+	    uuid: uuid
+	    sex: enum
+	    species: *Species
+	    age: int
+	    energy: float
+	    children: std::vector
+	    is_alive: bool
+	    pos: std::pair
+	    flock: *Flock
+	    +update()
+	    -move()
+	    send_energy()
+	    -eat()
+	    -reproduce()
+	    -attack()
+	    -sence()
+	    +die()
+    }
+
 	<<abstract>> ReproductionStrategy
 	<<interface>> Entity
 
-    Simulation -- World
-    World -- Entity
+    Simulation *-- World
+    Simulation *-- Logger
+    Simulation o-- EntityFactory
+    Simulation o-- ConfigParser
+    World *-- Entity
+    World *-- FlockManager
+    World o-- Species
+    FlockManager *-- Flock
+    Flock o-- Entity
+    Species o-- Entity
+    Species o-- ReproductionStrategy
     Asexual --|> ReproductionStrategy
     Hetero --|> ReproductionStrategy
     Homo --|> ReproductionStrategy
-    Species -- Entity
-    Flock -- Entity
-    EntityFactory -- Entity
-    ReproductionStrategy -- Species
-    Logger -- World
-    ConfigParser -- Simulation
-    FlockManager -- World
 
