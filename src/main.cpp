@@ -1,14 +1,13 @@
 #include <iostream>
-#include <chrono>
-#include <thread>
 #include "world.hpp"
 #include "logger.hpp"
+#include "entity.hpp"
 
 int main(int argc, char** argv) {
     Logger logger;
     World world;
 
-    PLOG_INFO << "plog called from main";
+    Entity entity0;
 
     return 0;
 }

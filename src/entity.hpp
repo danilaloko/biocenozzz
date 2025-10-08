@@ -1,11 +1,12 @@
 #pragma once 
 
 #include <vector>
-#include "species.hpp"
+#include "logger.hpp"
+//#include "species.hpp"
 
 class Entity{
 public:
-    Species species;
+    //Species species;
     int age;
     float energy;
     std::vector<Entity> children;
@@ -13,7 +14,8 @@ public:
     double x;
     double y;
 
-    Entity(Species *Species);
+    //Entity(Species *Species);
+    Entity();
     void update();
     void die();
 
