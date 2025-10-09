@@ -1,11 +1,13 @@
 #pragma once 
 
 #include <vector>
+#include <crossguid/guid.hpp>
 #include "logger.hpp"
 //#include "species.hpp"
 
 class Entity{
 public:
+    xg::Guid const id;
     //Species species;
     int age;
     float energy;
