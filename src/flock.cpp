@@ -9,7 +9,7 @@ Flock::Flock()
 }
 
 
-void Flock::operator+=(const Entity& entity) { //returns link for chain operations, for example flock += entity0 += entity1
+void Flock::operator+=(const Entity& entity) {
     if (std::find(members.begin(), members.end(), entity) == members.end()) {
         members.push_back(entity);
         PLOG_DEBUG << "Entity {" << entity.id << "} added to flock {" << id << "}";
