@@ -12,4 +12,6 @@ public:
     float energy;
 
     Flock();
+
+    Flock& operator+=(const Entity& entity); 
 };

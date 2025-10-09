@@ -21,6 +21,8 @@ public:
     void update();
     void die();
 
+    bool operator==(const Entity& other);
+
 private:
     void _move();
     void _eat();

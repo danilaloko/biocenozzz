@@ -6,3 +6,7 @@ Entity::Entity()
 {
     PLOG_DEBUG << "New entity created with uuid = {" << id << "}";
 }
+
+bool Entity::operator==(const Entity& other) {
+    return id.str() == other.id.str();
+}

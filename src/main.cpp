@@ -13,5 +13,8 @@ int main(int argc, char** argv) {
     Entity entity0;
     Flock flock0;
 
+    flock0 += entity0;
+    flock0 += entity0;
+
     return 0;
 }
