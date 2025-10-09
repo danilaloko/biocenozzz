@@ -15,4 +15,5 @@ public:
 
     void operator+=(const Entity& entity); 
     void operator-=(const Entity& entity); 
+    Flock operator+(const Flock& other) const;
 };
