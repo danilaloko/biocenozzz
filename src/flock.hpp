@@ -1,19 +1,23 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include <crossguid/guid.hpp>
 #include "entity.hpp"
 
 class Flock{
 public:
     xg::Guid id;
-    std::vector<Entity> members;
-    Entity *leader;
+    std::vector<std::shared_ptr<Entity>> members;
+    std::shared_ptr<Entity> leader;  // Должен быть shared_ptr, не Entity*
     float energy;
 
     Flock();
+    ~Flock();
 
-    void operator+=(const Entity& entity); 
-    void operator-=(const Entity& entity); 
-    Flock operator+(const Flock& other) const;
+    void operator+=(std::shared_ptr<Entity> entity); 
+    void operator-=(std::shared_ptr<Entity> entity);
+    
+    // Оператор сложения, который перемещает members и уничтожает исходные стаи
+    Flock operator+(Flock& other);
 };

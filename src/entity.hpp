@@ -1,23 +1,23 @@
 #pragma once 
 
 #include <vector>
+#include <memory>
 #include <crossguid/guid.hpp>
 #include "logger.hpp"
-//#include "species.hpp"
 
 class Entity{
 public:
     xg::Guid id;
-    //Species species;
     int age;
     float energy;
-    std::vector<Entity> children;
+    std::vector<std::shared_ptr<Entity>> children;  // shared_ptr для детей
     bool is_alive;
-    //double x;
-    //double y;
+    double x;
+    double y;
 
-    //Entity(Species *Species);
     Entity();
+    ~Entity();
+    
     void update();
     void die();
 
