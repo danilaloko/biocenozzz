@@ -9,7 +9,7 @@ class Flock{
 public:
     xg::Guid id;
     std::vector<std::shared_ptr<Entity>> members;
-    std::shared_ptr<Entity> leader;  // Должен быть shared_ptr, не Entity*
+    std::shared_ptr<Entity> leader;
     float energy;
 
     Flock();
@@ -18,6 +18,5 @@ public:
     void operator+=(std::shared_ptr<Entity> entity); 
     void operator-=(std::shared_ptr<Entity> entity);
     
-    // Оператор сложения, который перемещает members и уничтожает исходные стаи
     Flock operator+(Flock& other);
 };

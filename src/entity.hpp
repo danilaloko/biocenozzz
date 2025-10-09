@@ -10,7 +10,7 @@ public:
     xg::Guid id;
     int age;
     float energy;
-    std::vector<std::shared_ptr<Entity>> children;  // shared_ptr для детей
+    std::vector<std::shared_ptr<Entity>> children;
     bool is_alive;
     double x;
     double y;
