@@ -7,21 +7,21 @@
 
 class Entity{
 public:
-    xg::Guid const id;
+    xg::Guid id;
     //Species species;
     int age;
     float energy;
     std::vector<Entity> children;
     bool is_alive;
-    double x;
-    double y;
+    //double x;
+    //double y;
 
     //Entity(Species *Species);
     Entity();
     void update();
     void die();
 
-    bool operator==(const Entity& other);
+    bool operator==(const Entity& other) const;
 
 private:
     void _move();

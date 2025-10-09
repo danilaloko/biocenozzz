@@ -6,12 +6,13 @@
 
 class Flock{
 public:
-    xg::Guid const id;
+    xg::Guid id;
     std::vector<Entity> members;
     Entity *leader;
     float energy;
 
     Flock();
 
-    Flock& operator+=(const Entity& entity); 
+    void operator+=(const Entity& entity); 
+    void operator-=(const Entity& entity); 
 };

@@ -11,10 +11,14 @@ int main(int argc, char** argv) {
     World world;
 
     Entity entity0;
+    Entity entity1;
     Flock flock0;
+    flock0.leader = &entity0;
 
+    flock0 -= entity0;
     flock0 += entity0;
-    flock0 += entity0;
+    flock0 += entity1;
+    flock0 -= entity0;
 
     return 0;
 }
