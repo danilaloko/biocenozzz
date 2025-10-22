@@ -3,12 +3,12 @@
 #include <vector>
 #include <crossguid/guid.hpp>
 #include "logger.hpp"
-//#include "species.hpp"
+#include "species.hpp"
 
 class Entity{
 public:
     xg::Guid id;
-    //Species species;
+    Species* species; 
     int age;
     float energy;
     std::vector<Entity> children;
@@ -16,8 +16,7 @@ public:
     //double x;
     //double y;
 
-    //Entity(Species *Species);
-    Entity();
+    Entity(Species* species_ptr);
     void update();
     void die();
 
