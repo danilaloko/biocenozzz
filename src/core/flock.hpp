@@ -16,7 +16,7 @@ public:
     float energy;
 
     Flock() : id(QUuid::createUuid()), leader(nullptr), energy(0.0f) {
-        PLOG_DEBUG << "New typed flock created with uuid = {" << id << "}";
+        PLOG_DEBUG << "New typed flock created with uuid = {" << id.toString().toStdString() << "}";
     }
 
     void operator+=(Entity* entity) {
@@ -26,17 +26,17 @@ public:
             if (specific_species != nullptr) {
                 if (std::find(members.begin(), members.end(), entity) == members.end()) {
                     members.push_back(entity);
-                    PLOG_DEBUG << "Entity {" << entity->id << "} added to typed flock {" << id << "}";
+                    PLOG_DEBUG << "Entity {" << entity->id.toString().toStdString() << "} added to typed flock {" << id.toString().toStdString() << "}";
                 } else {
-                    PLOG_ERROR << "Tried to add entity {" << entity->id << "} to typed flock {" << id << "}, but it's already in flock";
+                    PLOG_ERROR << "Tried to add entity {" << entity->id.toString().toStdString() << "} to typed flock {" << id.toString().toStdString() << "}, but it's already in flock";
                 }
             } else {
-                PLOG_ERROR << "Tried to add entity {" << entity->id << "} to typed flock {" << id << "}, but species type doesn't match. " 
+                PLOG_ERROR << "Tried to add entity {" << entity->id.toString().toStdString() << "} to typed flock {" << id.toString().toStdString() << "}, but species type doesn't match. " 
                            << "Expected: " << typeid(SpeciesType).name() 
                            << ", Got: " << typeid(*(entity->species)).name();
             }
         } else {
-            PLOG_ERROR << "Tried to add entity {" << entity->id << "} without species to typed flock";
+            PLOG_ERROR << "Tried to add entity {" << entity->id.toString().toStdString() << "} without species to typed flock";
         }
     }
 
@@ -48,19 +48,19 @@ public:
             
             if (leader == entity) {
                 leader = nullptr;
-                PLOG_DEBUG << "Leader Entity {" << entity->id << "} was removed from typed flock {" << id << "}";
+                PLOG_DEBUG << "Leader Entity {" << entity->id.toString().toStdString() << "} was removed from typed flock {" << id.toString().toStdString() << "}";
             } else {
-                PLOG_DEBUG << "Entity {" << entity->id << "} removed from typed flock {" << id << "}";
+                PLOG_DEBUG << "Entity {" << entity->id.toString().toStdString() << "} removed from typed flock {" << id.toString().toStdString() << "}";
             }
         } else {
-            PLOG_ERROR << "Tried to remove entity {" << entity->id << "} from typed flock {" << id << "}, but not found it there";
+            PLOG_ERROR << "Tried to remove entity {" << entity->id.toString().toStdString() << "} from typed flock {" << id.toString().toStdString() << "}, but not found it there";
         }
     }
 
     Flock<SpeciesType> operator+(const Flock<SpeciesType>& other) const {
         Flock<SpeciesType> result;
 
-        PLOG_DEBUG << "Typed flocks {" << this->id << "} and {" << other.id << "} merged into created flock {" << result.id << "}";
+        PLOG_DEBUG << "Typed flocks {" << this->id.toString().toStdString() << "} and {" << other.id.toString().toStdString() << "} merged into created flock {" << result.id.toString().toStdString() << "}";
         
         for (Entity* entity : this->members) {
             result += entity;
@@ -86,5 +86,4 @@ public:
         
         return result;
     }
-    
 };

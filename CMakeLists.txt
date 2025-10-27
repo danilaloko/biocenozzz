@@ -13,11 +13,15 @@ set(CMAKE_AUTOMOC ON)
 file(GLOB_RECURSE SOURCES 
     "src/*.cpp"
     "src/*.c"
+    "src/core/*.cpp"
+    "src/core/*.c"
 )
 
 file(GLOB_RECURSE HEADERS 
     "src/*.h"
     "src/*.hpp"
+    "src/core/*.h"
+    "src/core/*.hpp"
 )
 
 list(FILTER SOURCES EXCLUDE REGEX ".*3rd-party.*")
