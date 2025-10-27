@@ -1,3 +1,4 @@
+#include <QCoreApplication>
 #include <iostream>
 #include "world.hpp"
 #include "logger.hpp"
@@ -6,35 +7,43 @@
 #include "flock.hpp"
 
 int main(int argc, char** argv) {
+    QCoreApplication app(argc, argv); // Необходимо для работы Qt
+    
     Logger logger;
     World world;
 
     Rabbit rabbit_species;
     Fox fox_species;
 
-
-    Entity rabbit_entity(&rabbit_species);
-    Entity another_rabbit(&rabbit_species);
-    Entity fox_entity(&fox_species);
-
-
+    // Создаем сущности с разными начальными позициями
+    Entity* rabbit1 = new Entity(&rabbit_species);
+    rabbit1->x = 0.0; rabbit1->y = 0.0;
+    
+    Entity* rabbit2 = new Entity(&rabbit_species);
+    rabbit2->x = 1.0; rabbit2->y = 1.0;
+    
+    Entity* fox = new Entity(&fox_species);
+    fox->x = 3.0; fox->y = 3.0;
+    
     Flock<Rabbit> rabbit_flock;
     Flock<Fox> fox_flock;
 
-    rabbit_flock += rabbit_entity;        
-    rabbit_flock += another_rabbit;       
-    rabbit_flock += fox_entity;
+    rabbit_flock += rabbit1;        
+    rabbit_flock += rabbit2;       
+    // rabbit_flock += fox;  // Это теперь вызовет ошибку, так как fox не Rabbit
     
-    fox_flock += fox_entity;
-    fox_flock += rabbit_entity;
+    fox_flock += fox;
+    // fox_flock += rabbit1; // И это тоже ошибка
 
+    rabbit_flock.leader = rabbit1;
+    fox_flock.leader = fox;
 
-    rabbit_flock.leader = &rabbit_entity;
-    fox_flock.leader = &fox_entity;
+    // Запускаем несколько циклов обновления
 
-
-    Flock<Rabbit> another_rabbit_flock;
-    Flock<Rabbit> merged_rabbit_flock = rabbit_flock + another_rabbit_flock;
+    // Очистка памяти (в реальном приложении нужно аккуратно управлять памятью)
+    delete rabbit1;
+    delete rabbit2;
+    delete fox;
 
     return 0;
 }

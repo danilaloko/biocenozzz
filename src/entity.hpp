@@ -1,20 +1,24 @@
 #pragma once 
 
 #include <vector>
-#include <crossguid/guid.hpp>
+#include <QUuid>
+#include <QObject>
 #include "logger.hpp"
 #include "species.hpp"
 
-class Entity{
+class Entity : public QObject {
+
+    Q_OBJECT
+
 public:
-    xg::Guid id;
+    QUuid id;
     Species* species; 
     int age;
     float energy;
-    std::vector<Entity> children;
+    std::vector<Entity*> children;
     bool is_alive;
-    //double x;
-    //double y;
+    double x;
+    double y;
 
     Entity(Species* species_ptr);
     void update();
