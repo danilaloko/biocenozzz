@@ -19,6 +19,7 @@ public:
     bool is_alive;
     double x;
     double y;
+    std::vector<Entity*> visible_entities;
 
     Entity(Species* species_ptr);
     void update();

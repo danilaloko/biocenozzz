@@ -6,6 +6,7 @@ Entity::Entity(Species* species_ptr)
     : QObject(), id(QUuid::createUuid()), species(species_ptr), age(0), energy(0.0f), 
       is_alive(true), x(0.0), y(0.0)
 {
+    visible_entities.clear();
     PLOG_DEBUG << "New entity created with uuid = {" << id.toString().toStdString() << "} and species";
 }
 

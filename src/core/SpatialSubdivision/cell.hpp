@@ -1,16 +1,16 @@
 #pragma once
 
-#include <QObject>
 #include <QHash>
-#include <vector>
 #include <QUuid>
 #include "../entity.hpp"
 
-class Cell : public QObject {
-
-Q_OBJECT
-
+class Cell {
 public:
     QHash<QUuid, Entity*> entity_map;
+    double size;
 
+    Cell(double cell_size);
+
+    void add_entity(Entity* entity);
+    void remove_entity(QUuid id);
 };
