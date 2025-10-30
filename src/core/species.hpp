@@ -23,20 +23,24 @@ public:
 
 class Rabbit : public Species{
 public:
-    TrophicCategory category = TrophicCategory::Herbivore;
-    int lifespan = 2;
-    float max_energy = 1;
-    float sense_radius = 5.0;
-    float act_radius = 2.5;
-    float speed = 7.0;
+    Rabbit() {
+        category = TrophicCategory::Herbivore;
+        lifespan = 2;
+        max_energy = 1.0f;
+        sense_radius = 5.0f;
+        act_radius = 2.5f;
+        speed = 7.0f;
+    }
 };
 
 class Fox : public Species{
 public:
-    TrophicCategory category = TrophicCategory::Carnivore;
-    int lifespan = 5;
-    float max_energy = 1;
-    float sense_radius = 4.0;
-    float act_radius = 3.5;
-    float speed = 7.0;
+    Fox() {
+        category = TrophicCategory::Carnivore;
+        lifespan = 5;
+        max_energy = 1.0f;
+        sense_radius = 4.0f;
+        act_radius = 3.5f;
+        speed = 7.0f;
+    }
 };
