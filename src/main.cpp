@@ -15,12 +15,14 @@ int main(int argc, char** argv) {
     Rabbit rabbit_species;
     Fox fox_species;
 
-
     Entity* rabbit1 = new Entity(&rabbit_species);
     Entity* rabbit2 = new Entity(&rabbit_species);
 
     Entity* fox = new Entity(&fox_species);
 
+    world.entity_map.insert(rabbit1->id, rabbit1);
+
+    std::cout << world.entity_map.value(rabbit1->id) << std::endl;
 
     Flock<Rabbit> rabbit_flock;
     Flock<Fox> fox_flock;

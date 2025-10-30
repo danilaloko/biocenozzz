@@ -1,7 +1,14 @@
 #pragma once
+#include <QObject>
+#include <QHash>
+#include <vector>
+#include <QUuid>
+#include "entity.hpp"
 
-#include "EntityManager.hpp"
+class World : public QObject {
 
-class World {
-    EntityManager entity_manager;
+Q_OBJECT
+
+public:
+    QHash<QUuid, Entity*> entity_map;
 };
