@@ -12,18 +12,17 @@ enum class TrophicCategory {
 
 class Species{
 public:
-    virtual ~Species() = default; // хоть какой-то виртуальный метод, чтобы работал dynamic_cast
-    //std::string name;
+    virtual ~Species() = default;
     TrophicCategory category;
     int lifespan;
     float max_energy;
     float sense_radius;
     float act_radius;
     float speed;
-    //std::vector<ReproductionStrategy> reproduction_strategies;
 };
 
 class Rabbit : public Species{
+public:
     TrophicCategory category = TrophicCategory::Herbivore;
     int lifespan = 2;
     float max_energy = 1;
@@ -33,6 +32,7 @@ class Rabbit : public Species{
 };
 
 class Fox : public Species{
+public:
     TrophicCategory category = TrophicCategory::Carnivore;
     int lifespan = 5;
     float max_energy = 1;

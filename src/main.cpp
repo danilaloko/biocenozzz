@@ -1,11 +1,14 @@
+#include <QCoreApplication>
 #include <iostream>
-#include "world.hpp"
-#include "logger.hpp"
-#include "entity.hpp"
-#include "species.hpp"
-#include "flock.hpp"
+#include "core/world.hpp"
+#include "core/logger.hpp"
+#include "core/entity.hpp"
+#include "core/species.hpp"
+#include "core/flock.hpp"
 
 int main(int argc, char** argv) {
+    QCoreApplication app(argc, argv);
+    
     Logger logger;
     World world;
 
@@ -13,28 +16,24 @@ int main(int argc, char** argv) {
     Fox fox_species;
 
 
-    Entity rabbit_entity(&rabbit_species);
-    Entity another_rabbit(&rabbit_species);
-    Entity fox_entity(&fox_species);
+    Entity* rabbit1 = new Entity(&rabbit_species);
+    Entity* rabbit2 = new Entity(&rabbit_species);
+
+    Entity* fox = new Entity(&fox_species);
 
 
     Flock<Rabbit> rabbit_flock;
     Flock<Fox> fox_flock;
 
-    rabbit_flock += rabbit_entity;        
-    rabbit_flock += another_rabbit;       
-    rabbit_flock += fox_entity;
-    
-    fox_flock += fox_entity;
-    fox_flock += rabbit_entity;
+    rabbit_flock += rabbit1;        
+    rabbit_flock += rabbit2;   
+
+    rabbit_flock += fox;    
+    fox_flock += fox;
 
 
-    rabbit_flock.leader = &rabbit_entity;
-    fox_flock.leader = &fox_entity;
-
-
-    Flock<Rabbit> another_rabbit_flock;
-    Flock<Rabbit> merged_rabbit_flock = rabbit_flock + another_rabbit_flock;
+    rabbit_flock.leader = rabbit1;
+    fox_flock.leader = fox;
 
     return 0;
 }
