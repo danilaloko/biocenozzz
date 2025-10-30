@@ -4,7 +4,7 @@
 #include <QHash>
 #include <vector>
 #include <QUuid>
-#include "entity.hpp"
+#include "../entity.hpp"
 
 class Cell : public QObject {
 

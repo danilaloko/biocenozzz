@@ -10,5 +10,10 @@ class World : public QObject {
 Q_OBJECT
 
 public:
+    size_t size_x;
+    size_t size_y;
+
     QHash<QUuid, Entity*> entity_map;
+
+    World(size_t size_x, size_t size_y);
 };

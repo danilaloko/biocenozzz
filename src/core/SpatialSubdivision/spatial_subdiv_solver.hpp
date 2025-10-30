@@ -5,8 +5,8 @@
 class SpatialSubdivSolver {
 
 public:
-    SpatialSubdivSolver(&World);
+    SpatialSubdivSolver(World &world);
 
 private:
-    World world;
+    World &world;
 };

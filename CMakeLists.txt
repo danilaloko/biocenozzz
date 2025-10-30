@@ -15,6 +15,8 @@ file(GLOB_RECURSE SOURCES
     "src/*.c"
     "src/core/*.cpp"
     "src/core/*.c"
+    "src/core/SpatialSubdivision/*.cpp"
+    "src/core/SpatialSubdivision/*.c"
 )
 
 file(GLOB_RECURSE HEADERS 
@@ -22,6 +24,8 @@ file(GLOB_RECURSE HEADERS
     "src/*.hpp"
     "src/core/*.h"
     "src/core/*.hpp"
+    "src/core/SpatialSubdivision/*.h"
+    "src/core/SpatialSubdivision/*.hpp"
 )
 
 list(FILTER SOURCES EXCLUDE REGEX ".*3rd-party.*")

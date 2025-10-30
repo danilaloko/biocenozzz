@@ -5,37 +5,16 @@
 #include "core/entity.hpp"
 #include "core/species.hpp"
 #include "core/flock.hpp"
+#include "core/SpatialSubdivision/spatial_subdiv_solver.hpp"
 
 int main(int argc, char** argv) {
     QCoreApplication app(argc, argv);
     
     Logger logger;
-    World world;
-
-    Rabbit rabbit_species;
-    Fox fox_species;
-
-    Entity* rabbit1 = new Entity(&rabbit_species);
-    Entity* rabbit2 = new Entity(&rabbit_species);
-
-    Entity* fox = new Entity(&fox_species);
-
-    world.entity_map.insert(rabbit1->id, rabbit1);
-
-    std::cout << world.entity_map.value(rabbit1->id) << std::endl;
-
-    Flock<Rabbit> rabbit_flock;
-    Flock<Fox> fox_flock;
-
-    rabbit_flock += rabbit1;        
-    rabbit_flock += rabbit2;   
-
-    rabbit_flock += fox;    
-    fox_flock += fox;
-
-
-    rabbit_flock.leader = rabbit1;
-    fox_flock.leader = fox;
+    World* world = new World(100, 100);
+    SpatialSubdivSolver solver(*world);
+    
 
     return 0;
 }
+
