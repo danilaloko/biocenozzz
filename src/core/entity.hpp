@@ -26,10 +26,14 @@ public:
 
     bool operator==(const Entity& other) const;
 
+    void update_pos(double target_x, double target_y);
+
 private:
-    void _move();
     void _eat();
     void _reproduce();
     void _attack();
     void _sense();
+
+signals:
+    void update_pos_signal(QUuid id, double x, double y);
 };

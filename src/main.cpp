@@ -12,9 +12,22 @@ int main(int argc, char** argv) {
     
     Logger logger;
     World* world = new World(100, 100);
-    SpatialSubdivSolver solver(*world);
     
+    // Создаем solver как указатель
+    SpatialSubdivSolver* solver = new SpatialSubdivSolver(*world);
 
-    return 0;
+    Rabbit rabbit_species;
+    Fox fox_species;
+
+    Entity* rabbit1 = new Entity(&rabbit_species);
+
+    world->entity_map.insert(rabbit1->id, rabbit1);
+
+    // СОЕДИНЕНИЕ - передаем указатель на solver
+    QObject::connect(rabbit1, &Entity::update_pos_signal,
+                    solver, &SpatialSubdivSolver::pos_update_handler);
+    
+    rabbit1->update_pos(10.5, 20.3);
+    
+    return app.exec();
 }
-

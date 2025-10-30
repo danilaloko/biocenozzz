@@ -12,3 +12,11 @@ Entity::Entity(Species* species_ptr)
 bool Entity::operator==(const Entity& other) const {
     return id == other.id;
 }
+
+void Entity::update_pos(double target_x, double target_y) {
+    x = target_x;
+    y = target_y;
+
+    emit update_pos_signal(id, x, y);
+    PLOG_DEBUG << "Entity " << id.toString().toStdString() << " emited signal update_pos_signal";
+}
