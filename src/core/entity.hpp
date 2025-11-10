@@ -1,3 +1,4 @@
+// entity.hpp
 #pragma once 
 
 #include <vector>
@@ -7,7 +8,6 @@
 #include "species.hpp"
 
 class Entity : public QObject {
-
     Q_OBJECT
 
 public:
@@ -34,6 +34,9 @@ private:
     void _reproduce();
     void _attack();
     void _sense();
+
+public slots:
+    void on_other_entity_moved(QUuid other_id, double other_x, double other_y);
 
 signals:
     void update_pos_signal(QUuid id, double x, double y);

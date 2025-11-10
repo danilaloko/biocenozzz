@@ -1,3 +1,4 @@
+// main.cpp
 #include <QCoreApplication>
 #include <QTimer>
 
@@ -6,43 +7,25 @@
 #include "core/logger.hpp"
 #include "core/entity.hpp"
 #include "core/species.hpp"
-#include "core/SpatialSubdivision/spatial_subdiv_solver.hpp"
+#include "core/entity_factory.hpp"
 
 int main(int argc, char** argv) {
     QCoreApplication app(argc, argv);
     
     Logger logger;
     World* world = new World(100, 100);
-    
-    SpatialSubdivSolver* solver = new SpatialSubdivSolver(*world, 5.0);
+    EntityFactory factory(world);
 
     Rabbit rabbit_species;
 
-    Entity* rabbit1 = new Entity(&rabbit_species);
-    Entity* rabbit2 = new Entity(&rabbit_species);
-
-    world->entity_map.insert(rabbit1->id, rabbit1);
-    world->entity_map.insert(rabbit2->id, rabbit2);
-
-    // TODO вот это непотребство надо в фабрику убрать
-    QObject::connect(rabbit1, &Entity::update_pos_signal,
-                    solver, &SpatialSubdivSolver::pos_update_handler);
-    QObject::connect(rabbit2, &Entity::update_pos_signal,
-                    solver, &SpatialSubdivSolver::pos_update_handler);
+    Entity* rabbit1 = factory.create_entity(&rabbit_species, 2.0, 2.0);
+    Entity* rabbit2 = factory.create_entity(&rabbit_species, 25.0, 25.0);
     
-
-    std::cout << "Setting initial positions..." << std::endl;
-    rabbit1->update_pos(2.0, 2.0);  
-    rabbit2->update_pos(25.0, 25.0); 
-    
-
-    std::cout << "Moving rabbit1 closer to rabbit2..." << std::endl;
-
+    PLOG_DEBUG << "Moving rabbit1 closer to rabbit2...";
     rabbit1->update_pos(23.0, 23.0);
-
-    auto collisions = solver->get_collisions_by_id(rabbit2->id);
-    PLOG_DEBUG << "Rabbit2 {" << rabbit2->id.toString().toStdString() << "} can see " << collisions[0]->id.toString().toStdString();
-            
+    
+    PLOG_DEBUG << "Moving rabbit2 even closer...";
+    rabbit2->update_pos(24.0, 24.0);
 
     
     return app.exec();
