@@ -11,7 +11,6 @@ class Server {
 private:
     httplib::Server svr;
     int port;
-    std::thread server_thread;
     std::atomic<bool> running;
     World* world;
 
