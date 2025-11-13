@@ -8,12 +8,18 @@
 #include "core/entity.hpp"
 #include "core/species.hpp"
 #include "core/entity_factory.hpp"
+#include "server/server.hpp"
 
 int main(int argc, char** argv) {
     QCoreApplication app(argc, argv);
     
     Logger logger;
     World* world = new World(100, 100);
+    
+    // Создаем сервер и передаем ему world
+    Server server(8080, world);
+    server.start();
+
     EntityFactory factory(world);
 
     Rabbit rabbit_species;
@@ -27,6 +33,10 @@ int main(int argc, char** argv) {
     PLOG_DEBUG << "Moving rabbit2 even closer...";
     rabbit2->update_pos(24.0, 24.0);
 
+    // Останавливаем сервер при выходе
+    QObject::connect(&app, &QCoreApplication::aboutToQuit, [&server]() {
+        server.stop();
+    });
     
     return app.exec();
 }

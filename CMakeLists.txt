@@ -32,12 +32,17 @@ list(FILTER SOURCES EXCLUDE REGEX ".*3rd-party.*")
 list(FILTER HEADERS EXCLUDE REGEX ".*3rd-party.*")
 
 add_subdirectory(src/3rd-party/plog)
+add_subdirectory(src/3rd-party/httplib)
+add_subdirectory(src/3rd-party/nlohmann_json)
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 target_link_libraries(biocenozzz 
     Qt5::Core
     plog::plog
+    httplib
+    nlohmann_json
+    #pthread
 )
 
 target_include_directories(biocenozzz PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)

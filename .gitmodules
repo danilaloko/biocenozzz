@@ -1,3 +1,9 @@
 [submodule "src/3rd-party/plog"]
 	path = src/3rd-party/plog
 	url = https://github.com/SergiusTheBest/plog.git
+[submodule "src/3rd-party/httplib"]
+	path = src/3rd-party/httplib
+	url = https://github.com/yhirose/cpp-httplib.git
+[submodule "src/3rd-party/nlohmann_json"]
+	path = src/3rd-party/nlohmann_json
+	url = https://github.com/nlohmann/json.git
