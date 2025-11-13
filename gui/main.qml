@@ -14,7 +14,7 @@ ApplicationWindow {
     }
 
     Timer {
-        interval: 1000
+        interval: 10
         running: true
         repeat: true
         onTriggered: entityController.updateEntities()
