@@ -1,3 +1,4 @@
+// species.hpp
 #pragma once
 
 #include <string>
@@ -42,5 +43,17 @@ public:
         sense_radius = 4.0f;
         act_radius = 3.5f;
         speed = 7.0f;
+    }
+};
+
+class Grass : public Species {
+public:
+    Grass() {
+        category = TrophicCategory::Producer;
+        lifespan = 2;
+        max_energy = 0.0f;
+        sense_radius = 1.0f;
+        act_radius = 1.0f;
+        speed = 0.0f;
     }
 };

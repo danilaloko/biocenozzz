@@ -29,11 +29,14 @@ int main(int argc, char** argv) {
     
     EntityFactory factory(world);
     Rabbit rabbit_species;
+    Grass grass_species;
 
     factory.create_entity(&rabbit_species, 10.0, 50.0);
     factory.create_entity(&rabbit_species, 90.0, 50.0);
     factory.create_entity(&rabbit_species, 50.0, 10.0);
     factory.create_entity(&rabbit_species, 50.0, 90.0);
+
+    factory.create_entity(&grass_species, 30.0, 30.0);
 
     world->run();
     
