@@ -1,4 +1,3 @@
-// entity_factory.hpp
 #pragma once
 
 #include <QObject>
