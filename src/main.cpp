@@ -3,6 +3,8 @@
 #include <QTimer>
 #include <thread>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
 
 #include <iostream>
 #include "core/world.hpp"
@@ -12,9 +14,10 @@
 #include "core/entity_factory.hpp"
 #include "server/server.hpp"
 
-
 int main(int argc, char** argv) {
     QCoreApplication app(argc, argv);
+    
+    std::srand(std::time(nullptr));
     
     Logger logger;
     World* world = new World(100, 100);
@@ -27,33 +30,12 @@ int main(int argc, char** argv) {
     EntityFactory factory(world);
     Rabbit rabbit_species;
 
-    Entity* rabbit1 = factory.create_entity(&rabbit_species, 10.0, 50.0);
-    Entity* rabbit2 = factory.create_entity(&rabbit_species, 90.0, 50.0);
-    
-    double pos1 = 10.0;
-    double pos2 = 90.0;
-    double speed1 = 0.5;
-    double speed2 = -0.5;
-    
-    QTimer timer;
-    QObject::connect(&timer, &QTimer::timeout, [&]() {
-        pos1 += speed1;
-        pos2 += speed2;
-        
-        if (pos1 <= 10.0 || pos1 >= 90.0) {
-            speed1 = -speed1;
-        }
-        
-        if (pos2 <= 10.0 || pos2 >= 90.0) {
-            speed2 = -speed2;
-        }
-        
-        rabbit1->update_pos(pos1, 50.0);
-        rabbit2->update_pos(pos2, 50.0);
-        
-    });
-    
-    timer.start(10);
+    factory.create_entity(&rabbit_species, 10.0, 50.0);
+    factory.create_entity(&rabbit_species, 90.0, 50.0);
+    factory.create_entity(&rabbit_species, 50.0, 10.0);
+    factory.create_entity(&rabbit_species, 50.0, 90.0);
+
+    world->run();
     
     QObject::connect(&app, &QCoreApplication::aboutToQuit, [&]() {
         server.stop();
