@@ -39,6 +39,8 @@ nlohmann::json Server::serialize<Entity>(const Entity* entity) const {
         j["species"] = "Rabbit";
     } else if (dynamic_cast<const Fox*>(entity->species)) {
         j["species"] = "Fox";
+    } else if (dynamic_cast<const Grass*>(entity->species)) {
+        j["species"] = "Grass";
     } else {
         j["species"] = "Unknown";
     }

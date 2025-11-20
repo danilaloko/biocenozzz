@@ -2,8 +2,8 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
-#include "entity.hpp"
 #include <algorithm>
+#include "entity.hpp"
 
 Entity::Entity(Species* species_ptr) 
     : QObject(), id(QUuid::createUuid()), species(species_ptr), age(0), 
@@ -18,12 +18,13 @@ Entity::Entity(Species* species_ptr)
                << "} at position (" << x << ", " << y << ") with energy: " << energy;
 }
 
-
 void Entity::update() {
-    energy -= 0.01f;
-    if (energy <= 0.0f) {
-        die();
-        return;
+    if (species->category != TrophicCategory::Producer) {
+        energy -= 0.01f;
+        if (energy <= 0.0f) {
+            die();
+            return;
+        }
     }
     
     _check_energy();
@@ -65,7 +66,6 @@ Entity* Entity::_find_food() {
 }
 
 void Entity::_find_predators() {
-    // TODO
 }
 
 void Entity::_update_searching_for_food() {
@@ -92,7 +92,6 @@ void Entity::_update_searching_for_food() {
     }
 }
 
-
 bool Entity::_can_eat(Entity* other) const {
     auto it = std::find(species->diet.begin(), species->diet.end(), other->species);
     return it != species->diet.end();
@@ -106,27 +105,7 @@ bool Entity::_is_threat(Entity* other) const {
 void Entity::update_pos(double target_x, double target_y) {
     x = target_x;
     y = target_y;
-
-    emit update_pos_signal(id, x, y);
-    emit entity_moved_signal(this); // НОВЫЙ сигнал с указателем
-    
-    // PLOG_DEBUG << "Entity " << id.toString().toStdString() 
-    //            << " moved to (" << x << ", " << y << ")";
-}
-
-void Entity::on_other_entity_moved(QUuid other_id, double other_x, double other_y) {
-    if (other_id == this->id) {
-        return;
-    }
-
-    double distance = std::sqrt(std::pow(this->x - other_x, 2) + 
-                              std::pow(this->y - other_y, 2));
-    
-    if (distance <= species->sense_radius) {
-        PLOG_DEBUG << "!!! Entity " << this->id.toString().toStdString() 
-                   << " DETECTED entity " << other_id.toString().toStdString() 
-                   << " at distance " << distance;
-    }
+    emit entity_moved_signal(this);
 }
 
 void Entity::on_other_entity_moved_ptr(Entity* other_entity) {
@@ -140,17 +119,11 @@ void Entity::on_other_entity_moved_ptr(Entity* other_entity) {
     if (distance <= species->sense_radius) {
         if (std::find(visible_entities.begin(), visible_entities.end(), other_entity) == visible_entities.end()) {
             visible_entities.push_back(other_entity);
-            PLOG_DEBUG << "Entity " << this->id.toString().toStdString() 
-                       << " ADDED to visible: " << other_entity->id.toString().toStdString()
-                       << " at distance " << distance;
         }
     } else {
         auto it = std::find(visible_entities.begin(), visible_entities.end(), other_entity);
         if (it != visible_entities.end()) {
             visible_entities.erase(it);
-            PLOG_DEBUG << "Entity " << this->id.toString().toStdString() 
-                       << " REMOVED from visible: " << other_entity->id.toString().toStdString()
-                       << " (distance: " << distance << ")";
         }
     }
 }
@@ -173,9 +146,6 @@ void Entity::_update_idle() {
         
         _target_pos_x = std::max(0.0, std::min(_target_pos_x, static_cast<double>(100)));
         _target_pos_y = std::max(0.0, std::min(_target_pos_y, static_cast<double>(100)));
-        
-        PLOG_DEBUG << "Entity " << id.toString().toStdString() 
-                   << " new target: (" << _target_pos_x << ", " << _target_pos_y << ")";
     }
 }
 

@@ -36,15 +36,18 @@ ApplicationWindow {
             Rectangle {
                 anchors.fill: parent
                 color: model.species === "Rabbit" ? "white" : 
-                       model.species === "Fox" ? "red" : "gray"
-                radius: 10
+                       model.species === "Fox" ? "red" : 
+                       model.species === "Grass" ? "darkgreen" : "gray"
+                radius: model.species === "Grass" ? 0 : 10
                 border.color: "black"
                 border.width: 1
             }
             
             Text {
                 anchors.centerIn: parent
-                text: model.species.charAt(0)
+                text: model.species === "Rabbit" ? "R" : 
+                      model.species === "Fox" ? "F" : 
+                      model.species === "Grass" ? "G" : "U"
                 font.pixelSize: 10
                 color: "black"
             }
@@ -67,23 +70,12 @@ ApplicationWindow {
                                 entityModel.append(entities[i]);
                             }
                         }
-                        console.log("Updated entities:", entities.length);
-                    } else {
-                        console.log("Error fetching entities:", xhr.status, xhr.statusText);
                     }
                 }
             }
             xhr.send();
         }
     }
-
-
-    // Button {
-    //     anchors.bottom: parent.bottom
-    //     anchors.horizontalCenter: parent.horizontalCenter
-    //     text: "Обновить"
-    //     onClicked: entityController.updateEntities()
-    // }
 
     Component.onCompleted: {
         entityController.updateEntities();

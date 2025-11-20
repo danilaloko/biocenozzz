@@ -33,7 +33,7 @@ public:
         category = TrophicCategory::Herbivore;
         lifespan = 2;
         max_energy = 1.0f;
-        sense_radius = 5.0f;
+        sense_radius = 100.0f;
         act_radius = 2.5f;
         speed = 7.0f;
     }
@@ -45,7 +45,7 @@ public:
         category = TrophicCategory::Carnivore;
         lifespan = 5;
         max_energy = 1.0f;
-        sense_radius = 30.0f;
+        sense_radius = 150.0f;
         act_radius = 3.5f;
         speed = 7.0f;
     }
@@ -56,7 +56,7 @@ public:
     Grass() {
         category = TrophicCategory::Producer;
         lifespan = 2;
-        max_energy = 0.0f;
+        max_energy = 9999.0f;
         sense_radius = 1.0f;
         act_radius = 1.0f;
         speed = 0.0f;
