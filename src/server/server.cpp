@@ -35,11 +35,11 @@ nlohmann::json Server::serialize<Entity>(const Entity* entity) const {
     j["x"] = entity->x;
     j["y"] = entity->y;
     
-    if (dynamic_cast<const Rabbit*>(entity->species)) {
+    if (entity->species->get_type() == std::type_index(typeid(Rabbit))) {
         j["species"] = "Rabbit";
-    } else if (dynamic_cast<const Fox*>(entity->species)) {
+    } else if (entity->species->get_type() == std::type_index(typeid(Fox))) {
         j["species"] = "Fox";
-    } else if (dynamic_cast<const Grass*>(entity->species)) {
+    } else if (entity->species->get_type() == std::type_index(typeid(Grass))) {
         j["species"] = "Grass";
     } else {
         j["species"] = "Unknown";
@@ -51,7 +51,6 @@ nlohmann::json Server::serialize<Entity>(const Entity* entity) const {
     
     return j;
 }
-
 void Server::run_server() {
     svr.Get("/entities", [this](const httplib::Request&, httplib::Response& res) {
         try {

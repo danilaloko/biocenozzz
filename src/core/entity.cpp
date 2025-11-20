@@ -97,12 +97,14 @@ void Entity::_update_searching_for_food() {
 }
 
 bool Entity::_can_eat(Entity* other) const {
-    auto it = std::find(species->diet.begin(), species->diet.end(), other->species);
+    auto it = std::find(species->diet.begin(), species->diet.end(), 
+                       std::type_index(typeid(*(other->species))));
     return it != species->diet.end();
 }
 
 bool Entity::_is_threat(Entity* other) const {
-    auto it = std::find(other->species->diet.begin(), other->species->diet.end(), this->species);
+    auto it = std::find(other->species->diet.begin(), other->species->diet.end(), 
+                       std::type_index(typeid(*(this->species))));
     return it != other->species->diet.end();
 }
 

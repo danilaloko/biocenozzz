@@ -27,22 +27,18 @@ int main(int argc, char** argv) {
     });
     
     EntityFactory factory(world);
-    Rabbit rabbit_species;
-    Fox fox_species;
-    Grass grass_species;
-
-
-    rabbit_species.diet.push_back(&grass_species);
-    fox_species.diet.push_back(&rabbit_species);
- 
-    rabbit_species.predators.push_back(&fox_species);
-    grass_species.predators.push_back(&rabbit_species); 
-
-    factory.create_entity(&rabbit_species, 10.0, 50.0);
-    factory.create_entity(&rabbit_species, 90.0, 50.0);
-    factory.create_entity(&fox_species, 20.0, 40.0);
-    factory.create_entity(&grass_species, 30.0, 30.0);
-    factory.create_entity(&grass_species, 70.0, 70.0);
+    
+    Grass grass_species1;
+    Grass grass_species2;
+    Rabbit rabbit_species1;
+    Rabbit rabbit_species2;
+    Fox fox_species1;
+    
+    factory.create_entity(&grass_species1, 30.0, 30.0);
+    factory.create_entity(&grass_species2, 70.0, 70.0);
+    factory.create_entity(&rabbit_species1, 10.0, 50.0);
+    factory.create_entity(&rabbit_species2, 90.0, 50.0);
+    factory.create_entity(&fox_species1, 20.0, 40.0);
 
     world->run();
     

@@ -3,9 +3,9 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <typeinfo>
+#include <typeindex>
 #include "reproduction_strategy.hpp"
-
-class Species;
 
 enum class TrophicCategory { 
     Producer, 
@@ -23,8 +23,25 @@ public:
     float sense_radius;
     float act_radius;
     float speed;
-    std::vector<Species*> diet;
-    std::vector<Species*> predators;
+    std::vector<std::type_index> diet; // Теперь храним типы, а не указатели
+    
+    virtual std::type_index get_type() const = 0;
+};
+
+class Grass : public Species {
+public:
+    Grass() {
+        category = TrophicCategory::Producer;
+        lifespan = 2;
+        max_energy = 0.0f;
+        sense_radius = 1.0f;
+        act_radius = 1.0f;
+        speed = 0.0f;
+    }
+    
+    std::type_index get_type() const override {
+        return std::type_index(typeid(Grass));
+    }
 };
 
 class Rabbit : public Species{
@@ -36,6 +53,11 @@ public:
         sense_radius = 100.0f;
         act_radius = 2.5f;
         speed = 7.0f;
+        diet.push_back(std::type_index(typeid(Grass)));
+    }
+    
+    std::type_index get_type() const override {
+        return std::type_index(typeid(Rabbit));
     }
 };
 
@@ -48,17 +70,10 @@ public:
         sense_radius = 150.0f;
         act_radius = 3.5f;
         speed = 7.0f;
+        diet.push_back(std::type_index(typeid(Rabbit)));
     }
-};
-
-class Grass : public Species {
-public:
-    Grass() {
-        category = TrophicCategory::Producer;
-        lifespan = 2;
-        max_energy = 9999.0f;
-        sense_radius = 1.0f;
-        act_radius = 1.0f;
-        speed = 0.0f;
+    
+    std::type_index get_type() const override {
+        return std::type_index(typeid(Fox));
     }
 };
