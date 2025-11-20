@@ -1,8 +1,11 @@
-// species.hpp
 #pragma once
 
 #include <string>
+#include <vector>
+#include <memory>
 #include "reproduction_strategy.hpp"
+
+class Species;
 
 enum class TrophicCategory { 
     Producer, 
@@ -20,6 +23,8 @@ public:
     float sense_radius;
     float act_radius;
     float speed;
+    std::vector<Species*> diet;
+    std::vector<Species*> predators;
 };
 
 class Rabbit : public Species{
@@ -40,7 +45,7 @@ public:
         category = TrophicCategory::Carnivore;
         lifespan = 5;
         max_energy = 1.0f;
-        sense_radius = 4.0f;
+        sense_radius = 30.0f;
         act_radius = 3.5f;
         speed = 7.0f;
     }

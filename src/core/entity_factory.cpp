@@ -26,6 +26,12 @@ Entity* EntityFactory::create_entity(Species* species_ptr, double x, double y) {
         
         connect(new_entity, &Entity::update_pos_signal,
                 existing_entity, &Entity::on_other_entity_moved);
+        
+        connect(existing_entity, &Entity::entity_moved_signal,
+                new_entity, &Entity::on_other_entity_moved_ptr);
+        
+        connect(new_entity, &Entity::entity_moved_signal,
+                existing_entity, &Entity::on_other_entity_moved_ptr);
     }
     
     PLOG_DEBUG << "Entity created and connected: " << new_entity->id.toString().toStdString()

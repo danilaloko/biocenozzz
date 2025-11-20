@@ -46,10 +46,18 @@ private:
     void _update_idle();
     void _update_searching_for_food();
     void _move_to_target();
+    void _check_energy();
+    Entity* _find_food();
+    void _find_predators();
+    bool _can_eat(Entity* other) const;
+    bool _is_threat(Entity* other) const;
 
 public slots:
     void on_other_entity_moved(QUuid other_id, double other_x, double other_y);
+    void on_other_entity_moved_ptr(Entity* other_entity);
 
 signals:
+    signals:
+    void entity_moved_signal(Entity* entity);
     void update_pos_signal(QUuid id, double x, double y);
 };

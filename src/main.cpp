@@ -1,4 +1,3 @@
-// main.cpp
 #include <QCoreApplication>
 #include <QTimer>
 #include <thread>
@@ -29,14 +28,21 @@ int main(int argc, char** argv) {
     
     EntityFactory factory(world);
     Rabbit rabbit_species;
+    Fox fox_species;
     Grass grass_species;
+
+
+    rabbit_species.diet.push_back(&grass_species);
+    fox_species.diet.push_back(&rabbit_species);
+ 
+    rabbit_species.predators.push_back(&fox_species);
+    grass_species.predators.push_back(&rabbit_species); 
 
     factory.create_entity(&rabbit_species, 10.0, 50.0);
     factory.create_entity(&rabbit_species, 90.0, 50.0);
-    factory.create_entity(&rabbit_species, 50.0, 10.0);
-    factory.create_entity(&rabbit_species, 50.0, 90.0);
-
+    factory.create_entity(&fox_species, 20.0, 40.0);
     factory.create_entity(&grass_species, 30.0, 30.0);
+    factory.create_entity(&grass_species, 70.0, 70.0);
 
     world->run();
     
