@@ -28,25 +28,33 @@ int main(int argc, char** argv) {
     
     EntityFactory factory(world);
     
-    Grass grass_species1;
-    Grass grass_species2;
-    Rabbit rabbit_species1;
-    Rabbit rabbit_species2;
-    Fox fox_species1;
+    PLOG_INFO << "Creating entities...";
     
-    factory.create_entity(&grass_species1, 30.0, 30.0);
-    factory.create_entity(&grass_species2, 70.0, 70.0);
-    factory.create_entity(&rabbit_species1, 10.0, 50.0);
-    factory.create_entity(&rabbit_species2, 90.0, 50.0);
-    factory.create_entity(&fox_species1, 20.0, 40.0);
+    Grass grass_species;
+    Rabbit rabbit_species; 
+    Fox fox_species;
+    
+    factory.create_entity(&grass_species, 30.0, 30.0);
+    factory.create_entity(&grass_species, 70.0, 70.0);
+    factory.create_entity(&rabbit_species, 10.0, 50.0);
+    factory.create_entity(&rabbit_species, 90.0, 50.0);
+    factory.create_entity(&fox_species, 20.0, 40.0);
 
+    PLOG_INFO << "Total entities created: " << world->entity_map.size();
+    
     world->run();
     
+    PLOG_INFO << "Simulation running with " << world->getThreadCount() << " threads";
+    
     QObject::connect(&app, &QCoreApplication::aboutToQuit, [&]() {
+        PLOG_INFO << "Shutting down simulation...";
+        world->stop();
         server.stop();
         if (server_thread.joinable()) {
             server_thread.join();
         }
+        delete world;
+        PLOG_INFO << "Simulation stopped";
     });
     
     return app.exec();

@@ -23,7 +23,7 @@ public:
     float sense_radius;
     float act_radius;
     float speed;
-    std::vector<std::type_index> diet; // Теперь храним типы, а не указатели
+    std::vector<std::type_index> diet;
     
     virtual std::type_index get_type() const = 0;
 };

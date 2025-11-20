@@ -3,7 +3,11 @@
 #include <QHash>
 #include <vector>
 #include <QUuid>
+#include <QThread>
+#include <QString>
 #include "entity.hpp"
+
+class SpeciesWorker;
 
 class World : public QObject {
     Q_OBJECT
@@ -14,11 +18,13 @@ public:
     QHash<QUuid, Entity*> entity_map;
 
     World(size_t size_x, size_t size_y);
+    ~World();
     void run();
+    void stop();
 
-public slots:
-    void simulation_step();
+    int getThreadCount() const { return threads.size(); }
 
 private:
-    QTimer* simulation_timer;
+    QHash<QString, SpeciesWorker*> workers;
+    QHash<QString, QThread*> threads;
 };
