@@ -40,6 +40,10 @@ void Entity::update() {
     }
     
     _move_to_target();
+
+    if (species->speed == 0.0f) {
+        emit entity_moved_signal(this);
+    }
 }
 
 void Entity::_check_energy() {
