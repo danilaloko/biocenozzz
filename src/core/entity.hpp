@@ -3,6 +3,8 @@
 #include <vector>
 #include <QUuid>
 #include <QObject>
+#include <QReadWriteLock>
+#include <atomic>
 #include "logger.hpp"
 #include "species.hpp"
 
@@ -17,12 +19,10 @@ class Entity : public QObject {
 public:
     QUuid id;
     Species* species; 
-    int age;
-    float energy;
+    std::atomic<int> age;
+    std::atomic<float> energy;
     std::vector<Entity*> children;
-    bool is_alive;
-    double x;
-    double y;
+    std::atomic<bool> is_alive;
     std::vector<Entity*> visible_entities;
 
     double _target_pos_x;
@@ -35,8 +35,19 @@ public:
     bool operator==(const Entity& other) const;
 
     void update_pos(double target_x, double target_y);
+    
+    void initPosition(double x, double y);
+
+    double getX() const;
+    double getY() const;
+    float getEnergy() const;
+    bool getIsAlive() const;
+    int getAge() const;
 
 private:
+    mutable QReadWriteLock position_lock;
+    double x;
+    double y;
     State _state;
     
     void _eat();

@@ -32,8 +32,11 @@ template<>
 nlohmann::json Server::serialize<Entity>(const Entity* entity) const {
     nlohmann::json j;
     j["id"] = entity->id.toString().toStdString();
-    j["x"] = entity->x;
-    j["y"] = entity->y;
+    j["x"] = entity->getX();           
+    j["y"] = entity->getY();           
+    j["energy"] = entity->getEnergy(); 
+    j["is_alive"] = entity->getIsAlive();
+    j["age"] = entity->getAge(); 
     
     if (entity->species->get_type() == std::type_index(typeid(Rabbit))) {
         j["species"] = "Rabbit";
@@ -45,12 +48,9 @@ nlohmann::json Server::serialize<Entity>(const Entity* entity) const {
         j["species"] = "Unknown";
     }
     
-    j["age"] = entity->age;
-    j["energy"] = entity->energy;
-    j["is_alive"] = entity->is_alive;
-    
     return j;
 }
+
 void Server::run_server() {
     svr.Get("/entities", [this](const httplib::Request&, httplib::Response& res) {
         try {

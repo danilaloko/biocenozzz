@@ -44,11 +44,11 @@ std::vector<Entity*> SpatialSubdivSolver::get_collisions_by_id(QUuid entity_id) 
     }
     
     double radius = entity->species->sense_radius;
-    auto center_cell = get_cell_indices(entity->x, entity->y);
+    auto center_cell = get_cell_indices(entity->getX(), entity->getY());
     std::vector<Entity*> result;
     
     PLOG_DEBUG << "Checking collisions for entity " << entity_id.toString().toStdString()
-               << " at (" << entity->x << ", " << entity->y << ") with radius " << radius;
+               << " at (" << entity->getX() << ", " << entity->getY() << ") with radius " << radius;
     
    
     for (int dx = -1; dx <= 1; ++dx) {
@@ -70,12 +70,12 @@ std::vector<Entity*> SpatialSubdivSolver::get_collisions_by_id(QUuid entity_id) 
                     if (other->id == entity_id) continue;
                     
 
-                    double distance_sq = std::pow(entity->x - other->x, 2) + 
-                                       std::pow(entity->y - other->y, 2);
+                    double distance_sq = std::pow(entity->getX() - other->getX(), 2) + 
+                                       std::pow(entity->getY() - other->getY(), 2);
                     double distance = std::sqrt(distance_sq);
                     
                     PLOG_DEBUG << "Distance to entity " << other->id.toString().toStdString()
-                               << " at (" << other->x << ", " << other->y << "): " << distance;
+                               << " at (" << other->getX() << ", " << other->getY() << "): " << distance;
                     
                     if (distance_sq <= radius * radius) {
                         result.push_back(other);
@@ -134,8 +134,8 @@ void SpatialSubdivSolver::pos_update_handler(QUuid id, double x, double y) {
         entity->visible_entities.push_back(other);
         
         double distance = std::sqrt(
-            std::pow(entity->x - other->x, 2) + 
-            std::pow(entity->y - other->y, 2)
+            std::pow(entity->getX() - other->getX(), 2) + 
+            std::pow(entity->getY() - other->getY(), 2)
         );
         
         PLOG_DEBUG << "Entity " << id.toString().toStdString() 
