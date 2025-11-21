@@ -8,7 +8,8 @@
 
 ### Build via cli
 ```
-git submodule update --init --recursive
+git clone -j8 --recursive https://github.com/danilaloko/biocenozzz.git
+cd biocenozzz
 mkdir build
 cd build
 cmake .. -DCMAKE_PREFIX_PATH=<PATH_TO_QT>\msvc2019_64\lib\cmake\Qt5
